@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<title>Vapeur</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="stylesheet.css">
+
+<style>
+	body, h1, h2, h3, h4, h5, h6 {
+		font-family: "Raleway", sans-serif
+	}
+</style>
+<body class="w3-light-grey w3-content" style="max-width: 1600px">
+
+
+	<!-- Sidebar/menu -->
+	<nav class="w3-sidebar w3-collapse w3-white w3-animate-left"
+	style="z-index: 3; width: 300px;" id="mySidebar">
+	<br>
+	<div class="w3-container">
+		<a href="#" onclick="w3_close()"
+		class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey"
+		title="close menu"> <i class="fa fa-remove"></i>
+	</a> <img src="vapeur_logo.png" style="width: 45%;" class="w3-round"><br>
+	<br>
+	<h4>
+		<b id="nickname">Vapeur</b>
+	</h4>
+	<div id="wallet" class="w3-text-grey">
+		The game store you need
+	</div>
+</div>
+<div id="menu" class="w3-bar-block">
+	<a href="/Vapeur/index.html" id="games_sidebar_button"
+	onclick="w3_close()"
+	class="w3-bar-item w3-button w3-padding"><i
+	class="fa fa-gamepad fa-fw w3-margin-right"></i>Games</a> <a
+	id="library_sidebar_button" onclick="w3_close(); goToLibrary()"
+	class="w3-bar-item w3-button w3-padding"><i
+	class="fa fa-book fa-fw w3-margin-right"></i>Library</a><a
+	id="selection_sidebar_button" onclick="w3_close(); goToSelection()"
+	class="w3-bar-item w3-button w3-padding"><i
+	class="fa fa-shopping-basket fa-fw w3-margin-right"></i>Selection</a><a
+	id="friend_sidebar_button" onclick="w3_close(); goToFriend()"
+	class="w3-bar-item w3-button w3-padding"><i
+	class="fa fa-user fa-fw w3-margin-right"></i>Friend</a>
+	<a id="logoff_sidebar_button" onclick="w3_close(); logoff()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-fw fa-power-off w3-margin-right"></i>Log off</a>
+</div>
+</nav>
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity"
+onclick="w3_close()" style="cursor: pointer" title="close side menu"
+id="myOverlay"></div>
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" id="test" style="margin-left: 300px">
+	<div id="id03" class="modal">
+		<div class="modal-content animate">
+			<div class="imgcontainer">
+				<span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+			</div>
+
+			<div class="container">
+				<label><b>Montant</b></label>
+				<input id="montant" type="text" placeholder="Montant à approvisionner" required>
+
+				<button class="loginbutton" onclick="addWallet()">Approvisionner</button>
+			</div>
+		</div>
+	</div>
+	<!-- Header -->
+	<header id="game">
+		<a href="#"><img src="/w3images/avatar_g2.jpg"
+			style="width: 65px;"
+			class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+			<span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey"
+			onclick="w3_open()"><i class="fa fa-bars"></i></span>
+			<div class="w3-container">
+				<h1>
+					<b>Friends</b>
+				</h1>
+			</div>
+			<div style="color: black">
+				<hr>
+			</div>
+		</header>
+
+		<div class="w3-row-padding">
+			<div class="w3-col s6">
+				<!-- Friends request -->
+				<div class="w3-container w3-white">
+					<p style="display: none" id="fr_label">Friend Request</p>
+					<ul class="w3-ul" id="friend_request">
+					</ul>
+				</div>
+				<!--  Friends -->
+				<div class="w3-container w3-white">
+					<p>Friends</p>
+					<hr>
+					<ul class="w3-ul" id="friends">
+					</ul>
+				</div>
+			</div>
+			<div class="w3-col s6">
+				<div class="w3-container w3-white">
+					<div class="w3-bottombar w3-padding-16">
+						<input type="text" name="search" placeholder="Search a friend.."
+						id="searchbar" /> <input type="button" id="btnSearchContact"
+						value="Search" onclick="searchContact()" hidden="true" />
+					</div>
+					<div class="w3-container w3-white">
+						<ul class="w3-ul" id="contact_list">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function getWallet(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "http://localhost:8085/Vapeur/user/wallet", false);
+			xhttp.send();
+			if(xhttp.responseText.length > 0 || xhttp.responseText){
+				return xhttp.responseText;
+			}
+		}
+		function logoff(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					location.reload(); 
+				}
+			};
+			xhttp.open("DELETE", "http://localhost:8085/Vapeur/Auth", true);
+			xhttp.send();
+		}
+		function addWallet(){
+			document.getElementById('id03').style.display='none';
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("wallet").innerHTML = getWallet() + " €" + "<i class=\"fa fa-plus\" style=\"float: right\" onclick=\"document.getElementById('id03').style.display = 'block'\"></i>";
+				}
+			}
+			var montant=encodeURIComponent(document.getElementById("montant").value);
+			console.log(montant)
+			xhttp.open("POST", "http://localhost:8085/Vapeur/user/wallet?quantity=" + montant, true);
+			xhttp.send();   
+		}
+		function log(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					if(this.responseText.length > 0 ||this.responseText){
+						user = JSON.parse(this.responseText);
+						if(user.nickname ==null)
+							window.location = "/Vapeur/index.html";
+						document.getElementById("nickname").innerHTML = user.nickname;
+						document.getElementById("wallet").innerHTML = getWallet() + " €" + "<i class=\"fa fa-plus\" style=\"float: right\" onclick=\"document.getElementById('id03').style.display = 'block'\"></i>";
+					}else{
+						window.location = "/Vapeur/index.html";
+					}
+				}
+			};
+			xhttp.open("GET", "http://localhost:8085/Vapeur/Auth", true);
+			xhttp.send();
+		}
+// Get the modal
+var modal = document.getElementById('id03');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+}
+
+// Script to open and close sidebar
+function w3_open() {
+	document.getElementById("mySidebar").style.display = "block";
+	document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+	document.getElementById("mySidebar").style.display = "none";
+	document.getElementById("myOverlay").style.display = "none";
+}
+
+function goToGame(x){
+	window.location = "/Vapeur/game.html?game="+x;
+}
+function goToLibrary(){
+	window.location = "/Vapeur/library.html";
+}
+function goToSelection(){
+	window.location = "/Vapeur/selection.html";
+}
+function goToFriend(){
+	window.location = "/Vapeur/friend.html";
+}
+function fetch_friends(){
+	var xhttp = new XMLHttpRequest();
+	var list = document.getElementById("friends");
+	list.innerHTML = "";
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			friends =JSON.parse(this.responseText);
+			for (var i = 0; i<friends.length && i < 9; i++){
+				list.innerHTML += "<li>" + friends[i].nickname + "<i class=\"fa fa-times\" onclick=\"remove(" + friends[i].id + ")\"></li>";
+			}
+		}
+	};
+	xhttp.open("GET", "http://localhost:8085/Vapeur/user/friends", true);
+	xhttp.send();
+}
+function fetch_friend_request(){
+	var xhttp = new XMLHttpRequest();
+	var list = document.getElementById("friend_request");
+	list.innerHTML = "";
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			friend_request =JSON.parse(this.responseText);
+			if(friend_request != []){
+				document.getElementById("fr_label").style.display = "block";
+			}
+			for (var i = 0; i<friend_request.length && i < 9; i++){
+				list.innerHTML += "<li>" + friend_request[i].nickname + "<i class=\"fa  fa-2x fa-check\" onclick=\"accept(" + friend_request[i].id + ")\"><i class=\"fa fa-times\" onclick=\"reject(" + friend_request[i].id + ")\"> </li>";
+			}
+		}
+	};
+	xhttp.open("GET", "http://localhost:8085/Vapeur/user/friend_request", true);
+	xhttp.send();
+}
+
+function accept(id){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			fetch_friend_request();
+			fetch_friends();
+		}
+	};
+	xhttp.open("POST", "http://localhost:8085/Vapeur/user/friends?id="+id, true);
+	xhttp.send();	
+}
+function reject(id){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			fetch_friend_request();
+			fetch_friends();
+		}
+	};
+	xhttp.open("DELETE", "http://localhost:8085/Vapeur/user/friend_request?id="+id, true);
+	xhttp.send();	
+}
+function remove(id){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			fetch_friend_request();
+			fetch_friends();
+		}
+	};
+	xhttp.open("DELETE", "http://localhost:8085/Vapeur/user/friends?id="+id, true);
+	xhttp.send();	
+}
+function searchContact(){
+	var searchtext = document.getElementById("searchbar").value;
+	var list = document.getElementById("contact_list");
+	list.innerHTML = "";
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			contact=JSON.parse(this.responseText);
+			for (var i = 0; i<contact.length && i < 9; i++){
+				console.log(contact[i]);
+				list.innerHTML += "<li><span>" + contact[i].nickname + "</span><i class=\"fa fa-2x fa-plus-circle\" onclick=\"add(" + contact[i].id + ")\"></i></li>";
+			}
+		}
+	};
+	xhttp.open("GET", "http://localhost:8085/Vapeur/FindContact?pattern="+searchtext, true);
+	xhttp.send();
+}
+document.getElementById("searchbar")
+.addEventListener("keyup", function(event) {
+	event.preventDefault();
+	if (event.keyCode == 13) {
+		document.getElementById("btnSearchContact").click();
+	}
+});
+function add(id){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			fetch_friend_request();
+			fetch_friends();
+		}
+	}
+	xhttp.open("POST", "http://localhost:8085/Vapeur/user/friend_request?id="+id, true);
+	xhttp.send();	
+};
+var user = null;
+var friends = null;
+var friend_request = null;
+var contact = null;
+document.getElementById("library_sidebar_button").classList.remove("w3-text-teal");
+document.getElementById("games_sidebar_button").classList.remove("w3-text-teal");
+document.getElementById("friend_sidebar_button").classList.add("w3-text-teal");
+log();
+fetch_friends();
+fetch_friend_request();
+searchContact();
+</script>
+
+</body>
+</html>

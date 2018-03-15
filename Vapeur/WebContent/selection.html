@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<title>Vapeur</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="stylesheet.css">
+<link rel="icon" type="image/png" href="vapeur_logo.png" />
+<style>
+  body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+
+  <!-- Sidebar/menu -->
+  <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <div class="w3-container">
+      <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+        <i class="fa fa-remove"></i>
+      </a>
+      <img src="vapeur_logo.png" style="width:45%;" class="w3-round"><br><br>
+      <h4><b id="nickname">Vapeur</b></h4>
+      <p id='wallet' class="w3-text-grey">The game store you need</p>
+    </div>
+    <div id= "menu" class="w3-bar-block">
+      <a href="/Vapeur/index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-gamepad fa-fw w3-margin-right"></i>Games</a> 
+      <a id ="login_sidebar_button" onclick="w3_close();document.getElementById('id01').style.display='block';document.getElementById('id02').style.display='none';" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>Login</a>
+      <a id="signup_sidebar_button" onclick="w3_close();document.getElementById('id02').style.display='block';document.getElementById('id01').style.display='none';" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>Sign up</a>
+    </div>
+  </nav>
+
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" id="test" style="margin-left:300px">
+
+
+    <!-- Header -->
+    <header id="game">
+      <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+
+      <div class="w3-container">
+        <h1>
+          <b>Selection</b>
+        </h1>
+      </div>
+      <div class="w3-section">
+        <div class="w3-row-padding" >
+          <div class="w3-quarter w3-container w3-margin-bottom">
+            <p><b>Total Price</b></p>
+            <p id="total">100€</p>
+          </div>
+          <div class="w3-quarter w3-container w3-margin-bottom">
+            <p><b>My Wallet</b></p>
+            <p id="wallet2">100€</p>
+          </div>
+          <div class="w3-quarter w3-container w3-margin-bottom">
+            <p><b>Remaining money</b></p>
+            <p id="after">0€</p>
+          </div>
+          <div class="w3-quarter w3-container w3-margin-bottom">
+            <button onclick="buyselection()" style="width:100%" id="buy-button">Buy the selection</button>
+            <button onclick="removeGame()" style="width:100%">Clear Selection</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="id03" >
+      <div id="modal-select" class="animate">
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+
+        <div class="container">
+          <label><b>Money</b></label>
+          <input id="montant" type="text" placeholder="Amount" required>
+
+          <button class="loginbutton" onclick="addWallet()">Add money</button>
+        </div>
+      </div>
+    </div>
+    <!-- First Photo Grid-->
+    <div id="selection">
+      <div class="w3-row-padding w3-white w3-margin-bottom">
+        <div class="w3-third w3-container w3-white"> 
+          <img src="./image/csgo.jpg"  alt="Norway" style="width:100%" class="image w3-hover-opacity">
+        </div>
+        <div class="w3-container w3-third w3-white w3-margin-bottom"> 
+          <p><b>Lorem Ipsum</b></p>
+          <p class="desc" >Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        </div>
+        <div class="w3-container w3-third">
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="w3-row-padding w3-white w3-margin-bottom">
+        <div class="w3-third w3-container w3-white"> 
+          <img src="./image/csgo.jpg"  alt="Norway" style="width:100%" class="image w3-hover-opacity">
+        </div>
+        <div class="w3-container w3-third w3-white w3-margin-bottom"> 
+          <p><b>Lorem Ipsum</b></p>
+          <p class="desc" >Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        </div>
+        <div class="w3-container w3-third">
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="w3-row-padding w3-white w3-margin-bottom ">
+        <div class="w3-third w3-container w3-white w3-margin-bottom"> 
+          <img src="./image/csgo.jpg"  alt="Norway" style="width:100%" class="image w3-hover-opacity">
+        </div>
+        <div class="w3-container w3-third w3-white"> 
+          <p><b>Lorem Ipsum</b></p>
+          <p class="desc" >Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        </div>
+        <div class="w3-container w3-third">
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="w3-row-padding w3-white w3-margin-bottom">
+        <div class="w3-third w3-container w3-white"> 
+          <img src="./image/csgo.jpg"  alt="Norway" style="width:100%" class="image w3-hover-opacity">
+        </div>
+        <div class="w3-container w3-third w3-white w3-margin-bottom"> 
+          <p><b>Lorem Ipsum</b></p>
+          <p class="desc" >Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        </div>
+        <div class="w3-container w3-third">
+          <button>Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  function getWallet(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "http://localhost:8085/Vapeur/user/wallet", false);
+    xhttp.send();
+    if(xhttp.responseText.length > 0 || xhttp.responseText){
+      return xhttp.responseText;
+    }
+  }function addWallet(){
+    document.getElementById('id03').style.display='none';
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       document.getElementById("wallet").innerHTML = getWallet() + " €" + "<i class=\"fa fa-plus\" style=\"float: right\" onclick=\"document.getElementById('id03').style.display = 'block'\"></i>";
+     }
+   }
+   var montant=encodeURIComponent(document.getElementById("montant").value);
+   console.log(montant)
+   xhttp.open("POST", "http://localhost:8085/Vapeur/user/wallet?quantity=" + montant, true);
+   xhttp.send();   
+ }
+ function buyselection(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      user.wallet = getWallet();
+      getSelection()
+
+    }
+  }
+  xhttp.open("POST", "http://localhost:8085/Vapeur/PurchaseSelection", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+  xhttp.send(null);
+}
+function removeGame(game){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      getSelection()
+    }
+  }
+  game = "?game="+game;
+  if(game==undefined)
+    game=="";
+  xhttp.open("DELETE", "http://localhost:8085/Vapeur/Selection" + game , true);
+  xhttp.send(game);
+}
+function logoff(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     location.reload(); 
+   }
+ };
+ xhttp.open("DELETE", "http://localhost:8085/Vapeur/Auth", true);
+ xhttp.send();
+}
+function log(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(this.responseText.length > 0 ||this.responseText){
+        user = JSON.parse(this.responseText);
+        if(user.nickname == null)
+          window.location = "/Vapeur/index.html";
+        user.wallet = getWallet();
+        document.getElementById("nickname").innerHTML = user.nickname;
+        document.getElementById("wallet").innerHTML = getWallet() + " €" + "<i class=\"fa fa-plus\" style=\"float: right\" onclick=\"document.getElementById('id03').style.display = 'block'\"></i>";        document.getElementById("login_sidebar_button").remove();
+        document.getElementById("signup_sidebar_button").remove();
+        document.getElementById("menu").innerHTML += `
+        <a id ="library_sidebar_button" onclick="w3_close(); goToLibrary()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>Library</a>
+        <a id="selection_sidebar_button" onclick="w3_close(); goToSelection()" class=" w3-text-teal w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-basket fa-fw w3-margin-right"></i>Selection</a> 
+        <a id="friend_sidebar_button" onclick="w3_close(); goToFriend()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>Friend</a>
+        <a id="logoff_sidebar_button" onclick="w3_close(); logoff()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-fw fa-power-off w3-margin-right"></i>Log off</a>
+        `
+      }else{
+        window.location = "/Vapeur/index.html";
+      }
+      getSelection();
+
+    }
+  };
+  xhttp.open("GET", "http://localhost:8085/Vapeur/Auth", true);
+  xhttp.send();
+}
+
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+
+function goToGame(x){
+  window.location = "/Vapeur/game.html?game="+x;
+}
+function goToLibrary(){
+ window.location = "/Vapeur/library.html";
+}
+function goToSelection(){
+  window.location = "/Vapeur/selection.html";
+}
+function goToFriend(){
+  window.location = "/Vapeur/friend.html";
+}
+function getSelection(){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(this.responseText.length>0){
+        selection=JSON.parse(this.responseText);
+      }else{
+        selection = null
+      }
+      refresh(selection);
+    }
+  };
+  xhttp.open("GET", "http://localhost:8085/Vapeur/Selection", true);
+  xhttp.send();
+}
+
+function refresh(s){
+  document.getElementById("selection").innerHTML="";
+  document.getElementById("buy-button").disabled = false;
+  document.getElementById("after").style.color = "#000000"
+
+
+  total = 0 ;
+  if (s==null){
+    total=0;
+  }else{
+    for(i=0;i<s.length;i++){
+      total += s[i].price;
+      document.getElementById("selection").innerHTML+=`
+      <div class="w3-row-padding w3-white w3-margin-bottom">
+        <div class="w3-third w3-container w3-white"> 
+          <img src="./image/`+s[i].image+`"  alt="Norway" style="width:100%" class="image w3-hover-opacity">
+        </div>
+        <div class="w3-container w3-third w3-white"> 
+          <p><b>`+s[i].title+`</b></p>
+          <p class="desc" >`+s[i].description.substring(0,150) + "..." +`</p>
+        </div>
+        <div class="w3-container w3-third">
+          <button onclick=removeGame(`+s[i].id+`)>Remove</button>
+        </div>
+      </div>
+      `
+
+    }
+
+  }
+  document.getElementById("wallet2").innerHTML=user.wallet+"€";
+  document.getElementById("total").innerHTML=total+"€";
+  document.getElementById("after").innerHTML=(user.wallet-total)+"€";
+  console.log(user.wallet-total); 
+  if(user.wallet - total <0){
+    document.getElementById("after").style.color = "#FF0000"
+    document.getElementById("buy-button").disabled=true ;
+  }
+
+}
+var user = null;
+log();
+
+</script>
+
+</body>
+</html>
